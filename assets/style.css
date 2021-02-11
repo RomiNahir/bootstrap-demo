@@ -1,0 +1,17 @@
+.fa-chevron-right {
+    transition: transform 0.2s ease-in-out 0s;
+  }
+  
+  /* rotate the chevron when the open class is applied */
+  li.open .fa-chevron-right {
+    transform: rotate(90deg);
+  }
+  
+  .nav li {
+    font-size: 18px;
+  }
+
+  
+  .btn-space {
+    margin-top: 20px;
+}
