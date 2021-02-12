@@ -7,6 +7,26 @@ import plotly.express as px
 
 from app import app
 
+tab1_content = dbc.Card(
+    dbc.CardBody(
+        [
+            html.P("This is tab 1!", className="card-text"),
+            dbc.Button("Click here", color="success"),
+        ]
+    ),
+    className="mt-3",
+)
+
+tab2_content = dbc.Card(
+    dbc.CardBody(
+        [
+            html.P("This is tab 2!", className="card-text"),
+            dbc.Button("Don't click here", color="danger"),
+        ]
+    ),
+    className="mt-3",
+)
+
 layout = html.Div(
     [
         html.H1(children="InputGroup"),
@@ -59,36 +79,42 @@ layout = html.Div(
         html.Hr(),
         html.H1(children="List Groups"),
         html.Div([dbc.Row(
-                    [dbc.Col(dbc.ListGroup(
-                        [
-                            dbc.ListGroupItem("Active item", active=True),
-                            dbc.ListGroupItem("Item 2",color="primary"),
-                            dbc.ListGroupItem("Item 3",color="warning"),
-                        ]
-                    ), md=6),
-                    dbc.Col(dbc.ListGroup(
-                        [
-                            dbc.ListGroupItem("Contact", href="/contact"),
-                            dbc.ListGroupItem("External link", href="https://aws.amazon.com/"),
-                            dbc.ListGroupItem("Disabled link", href="https://aws.amazon.com/", disabled=True),
-                        ]
-                    ), md=6),
-                    ],
-                ),
-            ]
+            [dbc.Col(dbc.ListGroup(
+                [
+                    dbc.ListGroupItem("Active item", active=True),
+                    dbc.ListGroupItem("Item 2", color="primary"),
+                    dbc.ListGroupItem("Item 3", color="warning"),
+                ]
+            ), md=6),
+                dbc.Col(dbc.ListGroup(
+                    [
+                        dbc.ListGroupItem("Contact", href="/contact"),
+                        dbc.ListGroupItem(
+                            "External link", href="https://aws.amazon.com/"),
+                        dbc.ListGroupItem(
+                            "Disabled link", href="https://aws.amazon.com/", disabled=True),
+                    ]
+                ), md=6),
+            ],
+        ),
+        ]
         ),
         html.Hr(),
         html.H1(children="Modal"),
 
-        dbc.Button("Small modal", id="open-sm", className="mr-1",color="primary"),
-        dbc.Button("Large modal", id="open-lg", className="mr-1",color="success"),
-        dbc.Button("Extra large modal", id="open-xl",outline=True, color="danger"),
+        dbc.Button("Small modal", id="open-sm",
+                   className="mr-1", color="primary"),
+        dbc.Button("Large modal", id="open-lg",
+                   className="mr-1", color="success"),
+        dbc.Button("Extra large modal", id="open-xl",
+                   outline=True, color="danger"),
         dbc.Modal(
             [
                 dbc.ModalHeader("Header"),
                 dbc.ModalBody("A small modal."),
                 dbc.ModalFooter(
-                    dbc.Button("Close", id="close-sm", className="ml-auto",color="primary")
+                    dbc.Button("Close", id="close-sm",
+                               className="ml-auto", color="primary")
                 ),
             ],
             id="modal-sm",
@@ -99,7 +125,8 @@ layout = html.Div(
                 dbc.ModalHeader("Header"),
                 dbc.ModalBody("A large modal."),
                 dbc.ModalFooter(
-                    dbc.Button("Close", id="close-lg", className="ml-auto",color="success")
+                    dbc.Button("Close", id="close-lg",
+                               className="ml-auto", color="success")
                 ),
             ],
             id="modal-lg",
@@ -110,20 +137,35 @@ layout = html.Div(
                 dbc.ModalHeader("Header"),
                 dbc.ModalBody("An extra large modal."),
                 dbc.ModalFooter(
-                    dbc.Button("Close", id="close-xl", className="ml-auto",outline=True, color="danger")
+                    dbc.Button("Close", id="close-xl",
+                               className="ml-auto", outline=True, color="danger")
                 ),
             ],
             id="modal-xl",
             size="xl",
         ),
 
+        html.H1(children="Tabs"),
+        dbc.Tabs(
+            [
+                dbc.Tab(tab1_content, label="Tab 1"),
+                dbc.Tab(tab2_content, label="Tab 2"),
+                dbc.Tab(
+                    "This tab's content is never seen", label="Tab 3", disabled=True
+                ),
+            ]),
+        html.Hr(className="mb-5")
+    ],
+)
 
 
-
-
-
-    ]
-)        
+@ app.callback(Output("content", "children"), [Input("tabs", "active_tab")])
+def switch_tab(at):
+    if at == "tab-1":
+        return tab1_content
+    elif at == "tab-2":
+        return tab2_content
+    return html.P("This shouldn't ever be displayed...")
 
 
 def toggle_modal(n1, n2, is_open):

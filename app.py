@@ -4,9 +4,9 @@ import dash_bootstrap_components as dbc
 
 FA = "https://use.fontawesome.com/releases/v5.8.1/css/all.css"
 
-app = dash.Dash(__name__, suppress_callback_exceptions=True,external_stylesheets=[dbc.themes.COSMO, FA])
+app = dash.Dash(__name__, suppress_callback_exceptions=True,external_stylesheets=[FA])
 
-app.title = 'Demo APP'
+app.title = 'AWS Dash Demo Template vBeta'
 
 server = app.server
 

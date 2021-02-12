@@ -3,7 +3,6 @@ import dash_html_components as html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 
-from app import app
 #from flask_login import login_user
 #from werkzeug.security import check_password_hash
 
@@ -13,10 +12,14 @@ layout = dbc.Container([
     dbc.Container([
         dcc.Location(id='urlLogin', refresh=True),
         html.Div([
-            dbc.Container(
-                html.H2('Please sign in',
-                    className='center'
+            dbc.Container(children=[
+                html.Img(
+                    src='https://image.flaticon.com/icons/png/128/1077/1077114.png',
+                    style={'float': 'right', 'width': '5%', 'margin-bottom' : '20px'}
                 ),
+                html.H2('Please sign in',
+                        className='center'
+                        )]
             ),
             dbc.Container(id='loginType', children=[
                 dcc.Input(

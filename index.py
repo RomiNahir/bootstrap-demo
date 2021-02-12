@@ -8,27 +8,40 @@ from app import app
 from pages import contact, login, components1, components2,map
 from app import server
 
- #, , , DARKLY, FLATLY, JOURNAL, LITERA, LUMEN, LUX, MATERIA, MINTY, PULSE, SANDSTONE, SIMPLEX, SKETCHY, SLATE, SOLAR, SPACELAB, SUPERHERO, UNITED, YETI
 
-items= [dbc.DropdownMenuItem("CERULEAN"),
-        dbc.DropdownMenuItem("COSMO"),
-        dbc.DropdownMenuItem("CYBORG"),
-        dbc.DropdownMenuItem("JOURNAL"),
-        dbc.DropdownMenuItem("LITERA"),
-        dbc.DropdownMenuItem("LUMEN"),
-        dbc.DropdownMenuItem("LUX"),
-        dbc.DropdownMenuItem("MATERIA"),
-        dbc.DropdownMenuItem("MINTY")
-        ]
+# , , , DARKLY, FLATLY, JOURNAL, LITERA, LUMEN, LUX, MATERIA, MINTY, PULSE, SANDSTONE, SIMPLEX, SKETCHY, SLATE, SOLAR, SPACELAB, SUPERHERO, UNITED, YETI
+
+
+def update_layout(value):
+    if value:
+        return([html.Link(href=value, rel='stylesheet')
+                ])
+    else:
+        return([html.Link(href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', rel='stylesheet')
+                ])
+
 
 search_bar = dbc.Row(
     [
         dbc.Col(dbc.Input(id="input-on-search",
                           type="text", placeholder="Search")),
         dbc.Col(
-            dbc.Button("Search", id='search-val', n_clicks=0,
-                       className="ml-2 btn-secondary btn"),
-            width="auto",
+            children=[
+                dbc.Button(
+                    "Search", id="positioned-toast-toggle", className="ml-2 btn-primary btn"
+                ),
+                dbc.Toast(
+                    "Your search result will be displayed soon!",
+                    id="positioned-toast",
+                    header="This is a Toast",
+                    is_open=False,
+                    dismissable=True,
+                    icon="success",
+                    # top: 66 positions the toast below the navbar
+                    style={"position": "fixed", "top": 66,
+                           "right": 10, "width": 350},
+                )],
+            width="auto"
         ),
     ],
     no_gutters=True,
@@ -45,10 +58,7 @@ navbar = dbc.Navbar(
                         dbc.Col(dcc.Link(html.I(id='home-button', n_clicks=0, className='fa fa-home',
                                                 style={'color': 'white', 'fontSize': '2rem'}), href='/')),
                         dbc.Col(dbc.NavbarBrand(
-                            "Dash App Template", className="ml-2")),
-                        dbc.DropdownMenu(
-                        label="Themes",
-                        children=items,)    
+                            "AWS Dash Template vBeta by Romina Mezher", className="ml-2"))
                     ],
                     align="center",
                     className="ml-auto flex-nowrap mt-3 mt-md-0",
@@ -86,7 +96,7 @@ def toggle_navbar_collapse(n, is_open):
 # the style arguments for the sidebar. We use position:fixed and a fixed width
 SIDEBAR_STYLE = {
     "position": "fixed",
-    "top": 60,
+    "top": 120,
     "left": 0,
     "bottom": 0,
     "width": "16rem",
@@ -104,7 +114,8 @@ CONTENT_STYLE = {
 
 
 link = [dbc.NavLink("1. Components", href="/components1", active="exact", style={"font-size": "19px", "padding-left": "0px"}),
-        dbc.NavLink("2. Components", href="/components2", active="exact", style={"font-size": "19px", "padding-left": "0px"}),
+        dbc.NavLink("2. Components", href="/components2", active="exact",
+                    style={"font-size": "19px", "padding-left": "0px"}),
         dbc.NavLink("Map", href="/map", active="exact",
                     style={"font-size": "19px", "padding-left": "0px"})
         ]
@@ -128,34 +139,40 @@ sidebar = html.Div(
 
 
 content = html.Div(id="page-content", style=CONTENT_STYLE)
+app.layout = html.Div([dcc.Dropdown(
+    id='theme-dropdown',
+    options=[
+        {'label': 'CERULEAN', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/cerulean/bootstrap.min.css'},
+        {'label': 'COSMO', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/cosmo/bootstrap.min.css'},
+        {'label': 'CYBORG', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/cyborg/bootstrap.min.css'},
+        {'label': 'DARKLY', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/darkly/bootstrap.min.css'},
+        {'label': 'FLATLY', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/flatly/bootstrap.min.css'},
+        {'label': 'JOURNAL', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/journal/bootstrap.min.css'},
+        {'label': 'LITERA', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/litera/bootstrap.min.css'},
+        {'label': 'LUMEN', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/lumen/bootstrap.min.css'},
+        {'label': 'LUX', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/lux/bootstrap.min.css'},
+        {'label': 'MATERIA', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/materia/bootstrap.min.css'},
+        {'label': 'MINTY', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/minty/bootstrap.min.css'},
+        {'label': 'PULSE', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/pulse/bootstrap.min.css'},
+        {'label': 'SANDSTONE', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/sandstone/bootstrap.min.css'},
+        {'label': 'SIMPLEX', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/simplex/bootstrap.min.css'},
+        {'label': 'SKETCHY', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/sketchy/bootstrap.min.css'},
+        {'label': 'SLATE', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/slate/bootstrap.min.css'},
+        {'label': 'SOLAR', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/solar/bootstrap.min.css'},
+        {'label': 'SPACELAB', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/spacelab/bootstrap.min.css'},
+        {'label': 'SUPERHERO', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/superhero/bootstrap.min.css'},
+        {'label': 'UNITED', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/united/bootstrap.min.css'},
+        {'label': 'YETI', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/yeti/bootstrap.min.css'},
+    ], style={'margin': '10px 20px 10px 5px'}),
+    html.Div([html.Div(id="style-layout"), dcc.Location(id="url"), navbar, sidebar, content])])
 
-app.layout = html.Div([dcc.Location(id="url"), navbar, sidebar, content])
 
-
-def toggle_collapse(n, is_open):
-    if n:
-        return not is_open
-    return is_open
-
-
-def set_navitem_class(is_open):
-    if is_open:
-        return "open"
-    return ""
-
-
-for i in [1, 2]:
-    app.callback(
-        Output(f"submenu-{i}-collapse", "is_open"),
-        [Input(f"submenu-{i}", "n_clicks")],
-        [State(f"submenu-{i}-collapse", "is_open")],
-    )(toggle_collapse)
-
-    app.callback(
-        Output(f"submenu-{i}", "className"),
-        [Input(f"submenu-{i}-collapse", "is_open")],
-    )(set_navitem_class)
-
+@app.callback(
+    Output("style-layout", "children"),
+    Input('theme-dropdown', 'value'),
+)
+def update_stylesheet(selectedTheme):
+    return update_layout(selectedTheme)
 
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
@@ -168,7 +185,7 @@ def render_page_content(pathname):
     elif pathname == '/components1':
         return components1.layout
     elif pathname == '/components2':
-        return components2.layout    
+        return components2.layout
     # If the user tries to reach a different page, return a 404 message
     return dbc.Jumbotron(
         [
@@ -180,14 +197,13 @@ def render_page_content(pathname):
 
 
 @app.callback(
-    Output("modal-centered", "is_open"),
-    [Input("loginButton", "n_clicks")],
-    [State("modal-centered", "is_open")],
+    Output("positioned-toast", "is_open"),
+    [Input("positioned-toast-toggle", "n_clicks")],
 )
-def toggle_modal(n1, is_open):
-    if n1:
-        return not is_open
-    return is_open
+def open_toast(n):
+    if n:
+        return True
+    return False    
 
 
 if __name__ == '__main__':
