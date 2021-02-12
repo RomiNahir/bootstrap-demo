@@ -2,7 +2,7 @@ import dash
 import dash_bootstrap_components as dbc
 
 
-FA = "https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+FA = "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
 
 app = dash.Dash(__name__, suppress_callback_exceptions=True,external_stylesheets=[FA])
 

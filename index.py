@@ -5,7 +5,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from app import app
-from pages import contact, login, components1, components2,map
+from pages import contact, login, components1, components2, tablepage,canvaspage,map
 from app import server
 
 
@@ -55,7 +55,7 @@ navbar = dbc.Navbar(
             html.A(
                 dbc.Row(
                     [
-                        dbc.Col(dcc.Link(html.I(id='home-button', n_clicks=0, className='fa fa-home',
+                        dbc.Col(dcc.Link(html.I(id='home-button', n_clicks=0, className='fa fa-amazon',
                                                 style={'color': 'white', 'fontSize': '2rem'}), href='/')),
                         dbc.Col(dbc.NavbarBrand(
                             "AWS Dash Template vBeta by Romina Mezher", className="ml-2"))
@@ -113,11 +113,16 @@ CONTENT_STYLE = {
 }
 
 
-link = [dbc.NavLink("1. Components", href="/components1", active="exact", style={"font-size": "19px", "padding-left": "0px"}),
+link = [dbc.NavLink("1. Components", href="/components1", active="exact", 
+                    style={"font-size": "19px", "padding-left": "0px"}),
         dbc.NavLink("2. Components", href="/components2", active="exact",
                     style={"font-size": "19px", "padding-left": "0px"}),
-        dbc.NavLink("Map", href="/map", active="exact",
-                    style={"font-size": "19px", "padding-left": "0px"})
+        dbc.NavLink("3. Data Table", href="/tablepage", active="exact",
+                    style={"font-size": "19px", "padding-left": "0px"}),                    
+        dbc.NavLink("4. Map", href="/map", active="exact",
+                    style={"font-size": "19px", "padding-left": "0px"}),
+        dbc.NavLink("5. Canvas", href="/canvaspage", active="exact",
+                    style={"font-size": "19px", "padding-left": "0px"})                    
         ]
 
 buttons = [dbc.Button("Contact Form", color="info", href='/contact', className="mr-1 btn-space"),
@@ -145,19 +150,13 @@ app.layout = html.Div([dcc.Dropdown(
         {'label': 'CERULEAN', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/cerulean/bootstrap.min.css'},
         {'label': 'COSMO', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/cosmo/bootstrap.min.css'},
         {'label': 'CYBORG', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/cyborg/bootstrap.min.css'},
-        {'label': 'DARKLY', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/darkly/bootstrap.min.css'},
-        {'label': 'FLATLY', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/flatly/bootstrap.min.css'},
         {'label': 'JOURNAL', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/journal/bootstrap.min.css'},
         {'label': 'LITERA', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/litera/bootstrap.min.css'},
         {'label': 'LUMEN', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/lumen/bootstrap.min.css'},
-        {'label': 'LUX', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/lux/bootstrap.min.css'},
-        {'label': 'MATERIA', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/materia/bootstrap.min.css'},
         {'label': 'MINTY', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/minty/bootstrap.min.css'},
-        {'label': 'PULSE', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/pulse/bootstrap.min.css'},
         {'label': 'SANDSTONE', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/sandstone/bootstrap.min.css'},
         {'label': 'SIMPLEX', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/simplex/bootstrap.min.css'},
         {'label': 'SKETCHY', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/sketchy/bootstrap.min.css'},
-        {'label': 'SLATE', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/slate/bootstrap.min.css'},
         {'label': 'SOLAR', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/solar/bootstrap.min.css'},
         {'label': 'SPACELAB', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/spacelab/bootstrap.min.css'},
         {'label': 'SUPERHERO', 'value': 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/superhero/bootstrap.min.css'},
@@ -186,6 +185,10 @@ def render_page_content(pathname):
         return components1.layout
     elif pathname == '/components2':
         return components2.layout
+    elif pathname == '/tablepage':
+        return tablepage.layout 
+    elif pathname == '/canvaspage':
+        return canvaspage.layout                
     # If the user tries to reach a different page, return a 404 message
     return dbc.Jumbotron(
         [

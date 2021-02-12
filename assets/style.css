@@ -15,3 +15,23 @@
   .btn-space {
     margin-top: 20px;
 }
+
+
+.four.columns {
+  width: 30.6666666667%;
+  padding-left: 15px;
+
+}
+.five.columns {
+  width: 39.3333333333%;
+}
+.six.columns {
+  width: 48%;
+}
+.seven.columns {
+  width: 56.6666666667%;
+}
+.eight.columns {
+  width: 65.3333333333%;
+  padding-left: 10px;
+}
