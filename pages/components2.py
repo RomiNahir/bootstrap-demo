@@ -144,7 +144,7 @@ layout = html.Div(
             id="modal-xl",
             size="xl",
         ),
-
+        html.Hr(className="mb-3 mt-3"),
         html.H1(children="Tabs"),
         dbc.Tabs(
             [
